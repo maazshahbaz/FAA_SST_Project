@@ -48,6 +48,8 @@ dataset1 = load_dataset("Jzuluaga/uwb_atcc")
 dataset2 = load_dataset("Jzuluaga/atcosim_corpus")
 dataset3 = load_dataset("Jzuluaga/atco2_corpus_1h")
 
+#%%
+'''
 # Concatenate all the datasets
 all_datasets = concatenate_datasets([dataset1["train"], dataset1["test"], dataset2["train"], dataset2["test"], dataset3["test"]])
 
@@ -55,6 +57,17 @@ all_datasets = concatenate_datasets([dataset1["train"], dataset1["test"], datase
 dataset = all_datasets.train_test_split(test_size=0.0408)
 
 # The 'dataset' object is now a DatasetDict with 'train' and 'test' splits
+print(dataset)
+'''
+#%%
+
+train = concatenate_datasets([dataset1["train"], dataset2["train"]])
+test = concatenate_datasets([dataset3["test"]])
+
+dataset=DatasetDict()
+
+dataset['train']=train
+dataset['test']=test
 
 print(dataset)
 # Remove unnecessary columns
