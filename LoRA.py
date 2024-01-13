@@ -93,12 +93,18 @@ from datasets import Audio
 
 common_voice = dataset.cast_column("audio", Audio(sampling_rate=16000))
 
-def add_noise(audio_array, noise_level=0.005):
-    # Generate random noise with the same length as the input audio
-    noise = np.random.normal(0, noise_level, len(audio_array))
-    
-    # Add the generated noise to the input audio
-    audio_with_noise = audio_array + noise
+def add_noise(audio_array, noise_level=0.005, white_noise_level=0.002, electronic_noise_level=0.002):
+    # Generate Gaussian noise with the same length as the input audio
+    gaussian_noise = np.random.normal(0, noise_level, len(audio_array))
+
+    # Generate white noise with the same length as the input audio
+    white_noise = np.random.normal(0, white_noise_level, len(audio_array))
+
+    # Generate electronic noise with the same length as the input audio
+    electronic_noise = np.random.normal(0, electronic_noise_level, len(audio_array))
+
+    # Add all the generated noise components to the input audio
+    audio_with_noise = audio_array + gaussian_noise + white_noise + electronic_noise
 
     return audio_with_noise
 
